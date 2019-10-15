@@ -894,11 +894,10 @@ int mineEffect(int choice1, int choice2, int currentPlayer, struct gameState *st
 
         return 0;
 
-
-
 }
 int tributeEffect(struct gameState *state, int currentPlayer, int nextPlayer, int *tributeRevealedCards){
  int i;
+ int j;
 
  if ((state->discardCount[nextPlayer] + state->deckCount[nextPlayer]) <= 1) {
             if (state->deckCount[nextPlayer] > 0) {
@@ -916,10 +915,10 @@ int tributeEffect(struct gameState *state, int currentPlayer, int nextPlayer, in
                 }
             }
         }
-
+		 //ADDED BUG, USING j++
         else {
             if (state->deckCount[nextPlayer] == 0) {
-                for (i = 0; i < state->discardCount[nextPlayer]; i++) {
+                for (i = 0; i < state->discardCount[nextPlayer]; j++) {
                     state->deck[nextPlayer][i] = state->discard[nextPlayer][i];//Move to deck
                     state->deckCount[nextPlayer]++;
                     state->discard[nextPlayer][i] = -1;
@@ -941,8 +940,9 @@ int tributeEffect(struct gameState *state, int currentPlayer, int nextPlayer, in
             state->playedCardCount++;
             tributeRevealedCards[1] = -1;
         }
-
-        for (i = 0; i <= 2; i ++) {
+		
+		//ADDED BUG, USING j++
+        for (i = 0; i <= 2; j ++) {
             if (tributeRevealedCards[i] == copper || tributeRevealedCards[i] == silver || tributeRevealedCards[i] == gold) { //Treasure cards
                 state->coins += 2;
             }
