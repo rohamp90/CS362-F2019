@@ -757,13 +757,15 @@ int minionEffect(int choice1, int choice2, int currentPlayer, struct gameState *
             }
 
             //draw 4
-            for (i = 0; i < 4; i++)
+			//ADDED BUG, CHANGED 4 to 3
+            for (i = 0; i < 3; i++)
             {
                 drawCard(currentPlayer, state);
             }
 
             //other players discard hand and redraw if hand size > 4
-            for (i = 0; i < state->numPlayers; i++)
+			//ADDED BUG, LOOP COUNTING FROM 1, NOT 0
+            for (i = 1; i < state->numPlayers; i++)
             {
                 if (i != currentPlayer)
                 {
