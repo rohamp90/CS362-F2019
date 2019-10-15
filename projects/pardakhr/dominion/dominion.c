@@ -796,8 +796,9 @@ int ambassadorEffect(int choice1, int choice2, int currentPlayer, struct gameSta
 	 int j;
 
 	 j = 0;		//used to check if player has enough cards to discard
-
-        if (choice2 > 2 || choice2 < 0)
+		
+		//ADDED BUG, FROM OR TO AND
+        if (choice2 > 2 && choice2 < 0)
         {
             return -1;
         }
@@ -838,7 +839,8 @@ int ambassadorEffect(int choice1, int choice2, int currentPlayer, struct gameSta
         discardCard(handPos, currentPlayer, state, 0);
 
         //trash copies of cards returned to supply
-        for (j = 0; j < choice2; j++)
+		//ADDED BUG, NOT COUNTING FROM 0
+        for (j = choice2; j < choice2; j++)
         {
             for (i = 0; i < state->handCount[currentPlayer]; i++)
             {
