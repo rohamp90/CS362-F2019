@@ -861,7 +861,7 @@ int mineEffect(int choice1, int choice2, int currentPlayer, struct gameState *st
  	j = state->hand[currentPlayer][choice1];  //store card we will trash
 		
 		//ADDED BUG, IT WAS <
-        if (state->hand[currentPlayer][choice1] <= copper || state->hand[currentPlayer][choice1] > gold)
+        if (state->hand[currentPlayer][choice1] < copper || state->hand[currentPlayer][choice1] > gold)
         {
             return -1;
         }
