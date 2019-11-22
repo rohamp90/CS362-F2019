@@ -41,7 +41,7 @@ int main()
 	G1.hand[player][1] = estate;
 	memcpy(&G2, &G1, sizeof(struct gameState));
 
-	baronCardEffect(0, player, &G2);
+	cardBaron(&G2, player, 0);
 
 	// Verify number of buys incremented
 	Validation("gain 1 buy", (G2.numBuys == G1.numBuys + 1));
@@ -65,7 +65,7 @@ int main()
 	}
 	memcpy(&G2, &G1, sizeof(struct gameState));
 
-	baronCardEffect(0, player, &G2);
+	cardBaron(&G2, player, 0);
 
 	Validation("Estate supply count did not change", (G2.supplyCount[estate] == G1.supplyCount[estate]));
 	Validation("Discard count is not changed", (G2.discardCount[player] == G1.discardCount[player]));
@@ -85,7 +85,7 @@ int main()
 	}
 	memcpy(&G2, &G1, sizeof(struct gameState));
 
-	baronCardEffect(1, player, &G2);
+	cardBaron(&G2, player, 1);
 	Validation("4 coins should not be added", (G2.coins == G1.coins));
 	Validation("Estate supply count did not change", (G2.supplyCount[estate] == G1.supplyCount[estate]));
 	Validation("Discard count is not changed", (G2.discardCount[player] == G1.discardCount[player]));
@@ -101,14 +101,14 @@ int main()
 	G1.hand[player][1] = estate;
 	memcpy(&G2, &G1, sizeof(struct gameState));
 
-	baronCardEffect(1, player, &G2);
+	cardBaron(&G2, player, 1);
 
 	Validation("4 coins should be added", (G2.coins == G1.coins + 4));
 	Validation("Player should loses a card", (G2.handCount[player] < G1.handCount[player]));
 	Validation("Estate is placed in discard", (G2.discard[0][0] == estate));
 	Validation("Discard count incremented", (G2.discardCount[player] == G1.discardCount[player] + 1));
 
-	// Tesr 5:
+	// Test 5:
 	printf("\n**Test_5**: Player gain estate but supply is empty:\n");
 	memset(&G1, 23, sizeof(struct gameState));
 	memset(&G2, 23, sizeof(struct gameState));
@@ -119,7 +119,7 @@ int main()
 	G1.supplyCount[estate] = 0;
 	memcpy(&G2, &G1, sizeof(struct gameState));
 
-	baronCardEffect(0, player, &G2);
+	cardBaron(&G2, player, 0);
 	Validation("No estates gained", (G2.supplyCount[estate] == 0));
 	Validation("Discard count is not changed", (G2.discardCount[player] == G1.discardCount[player]));
 	Validation("Estate is not placed in discard", (G2.discard[0][0] != estate));
