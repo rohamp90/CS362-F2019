@@ -1100,10 +1100,12 @@ int cardMinion(struct gameState *state, const int choice1, const int choice2, co
     //discard card from hand
     discardCard(handPos, currentPlayer, state, 0);
  
-    if (choice2)
+    if (choice1)
     {
         state->coins = state->coins + 2;
     }
+
+	// FOUND BUG: Should be 2 not 1
     else if (choice1)		//discard hand, redraw 4, other players with 5+ cards discard hand and draw 4
     {
         //discard hand
@@ -1160,6 +1162,9 @@ int cardBaron(struct gameState *state, const int currentPlayer, const int choice
                 }
                 state->hand[currentPlayer][state->handCount[currentPlayer]] = -1;
                 state->handCount[currentPlayer]--;
+
+				// FOUND BUG: SHOULD EXIT THE LOOP
+				card_not_discarded = 0;
             }
             else if (p > state->handCount[currentPlayer]) {
                 if(DEBUG) {
@@ -1174,6 +1179,8 @@ int cardBaron(struct gameState *state, const int currentPlayer, const int choice
                         isGameOver(state);
                     }
                 }
+				// FOUND BUG: SHOULD EXIT THE LOOP
+				card_not_discarded = 0;
             }
 
             else {

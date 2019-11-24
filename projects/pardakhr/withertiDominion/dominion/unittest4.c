@@ -27,6 +27,7 @@ int main()
 	int player2 = 1;				// other player
 	struct gameState G1, G2;
 	int k[10] = { adventurer, embargo, village, minion, mine, cutpurse, sea_hag, tribute, smithy, council_room };
+	int tributeRevealedCards[2] = { -1, -1 };
 
 	initializeGame(numPlayers, k, seed, &G1);
 
@@ -43,7 +44,7 @@ int main()
 	memcpy(&G2, &G1, sizeof(struct gameState));
 
 	G2.deckCount[player2] = 0;
-	tributeEffect( player, player2, &G2);
+	cardTribute(&G2, player, player2, tributeRevealedCards);
 	Validate("Player gained no bonus cards", G2.handCount[player] + 1 == G1.handCount[player]);
 	Validate("Player gained no action cards", G2.numActions == G1.numActions);
 	Validate("Player gained no coin", G2.coins == G1.coins);
@@ -60,8 +61,10 @@ int main()
 	G2.deckCount[player2] = 1;
 	G2.deck[player2][0] = tribute;
 	G2.discardCount[player2] = 0;
+	tributeRevealedCards[0] = -1;
+	tributeRevealedCards[1] = -1;
 
-	tributeEffect(player, player2, &G2);
+	cardTribute(&G2, player, player2, tributeRevealedCards);
 	Validate("Player gained no bonus cards", G2.handCount[player] + 1 == G1.handCount[player]);
 	Validate("Player gained two action cards", G2.numActions == G1.numActions + 2);
 	Validate("Player gained no coin", G2.coins == G1.coins);
@@ -79,7 +82,7 @@ int main()
 	G2.deck[player2][0] = copper;
 	G2.discardCount[player2] = 0;
 
-	tributeEffect(player, player2, &G2);
+	cardTribute(&G2, player, player2, tributeRevealedCards);
 	Validate("Player gained no bonus cards", G2.handCount[player] + 1 == G1.handCount[player]);
 	Validate("Player gained no action cards", G2.numActions == G1.numActions);
 	Validate("Player gained two coin", G2.coins == G1.coins + 2);
@@ -97,7 +100,7 @@ int main()
 	G2.deck[player2][0] = estate;
 	G2.discardCount[player2] = 0;
 
-	tributeEffect(player, player2, &G2);
+	cardTribute(&G2, player, player2, tributeRevealedCards);
 	Validate("Player gained  bonus cards", G2.handCount[player] -1 == G1.handCount[player]);
 	Validate("Player gained no action cards", G2.numActions == G1.numActions);
 	Validate("Player gained no coin", G2.coins == G1.coins);

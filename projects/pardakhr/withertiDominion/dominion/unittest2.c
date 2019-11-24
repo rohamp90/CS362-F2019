@@ -42,7 +42,7 @@ int main()
 	initializeGame(numPlayers, k, seed, &G1);
 	memcpy(&G2, &G1, sizeof(struct gameState));
 
-	minionEffect(1, 0, player, &G2, handpos);
+	cardMinion(&G2, 1, 0, handpos, player);
 
 	Validation("Coins increased by 2", (G2.coins == G1.coins + 2));
 	Validation("Actions increased by 1", (G2.numActions == G1.numActions + 1));
@@ -60,7 +60,7 @@ int main()
 	G2.handCount[player2] = 5;				// Give other player 5 cards
 
 
-	minionEffect(0, 1, player, &G2, handpos);
+	cardMinion(&G2, 0, 1, handpos, player);
 	Validation("Player gained new cards (Checking first card)", (G2.hand[player][0] != -1));
 	Validation("Player has now 4 cards", G2.handCount[player] == 4);
 	Validation("Other player gained new cards", (G2.hand[player2][0] != -1));
@@ -83,7 +83,7 @@ int main()
 	}
 
 
-	minionEffect(0, 1, player, &G2, handpos);
+	cardMinion(&G2, 0, 1, handpos, player);
 	Validation("Player gained new cards (Checking first card)", (G2.hand[player][0] != -1));
 	Validation("Player has now 4 cards", G2.handCount[player] == 4);
 	Validation("Played count is 5", (G2.playedCardCount == G1.playedCardCount + playerHandCount));

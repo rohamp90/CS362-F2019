@@ -47,6 +47,7 @@ int main(int argc, char *argv[])
 		
 		memset(&G1, 23, sizeof(struct gameState));
 		memset(&G2, 23, sizeof(struct gameState));
+		int tributeRevealedCards[2] = { -1, -1 };
 
 		//Initialize a new game
 		int r = initializeGame(2, k, seed, &G1);
@@ -72,7 +73,7 @@ int main(int argc, char *argv[])
 
 		memcpy(&G2, &G1, sizeof(struct gameState));
 
-		tributeEffect(0, 1, &G1);
+		cardTribute(&G1, 0, 1, tributeRevealedCards);
 
 		testNum++;
 		printf("**Test Number %d**\n", testNum);

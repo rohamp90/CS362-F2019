@@ -39,16 +39,16 @@ int main()
 	initializeGame(numPlayers, k, seed, &G1);
 	memcpy(&G2, &G1, sizeof(struct gameState));
 	G2.hand[player][1] = copper;
-	result = mineEffect(1, gold, player, &G2, handpos);
+	result = cardMine(&G2, handpos, player, 1, gold);
 	Validate("Invalid gaining of treasure too high", result == -1);
 
 
 	G2.hand[player][1] = curse;
-	result = mineEffect( 1, silver, player, &G2, handpos);
+	result = cardMine(&G2, handpos, player, 1, silver);
 	Validate("Invalid trashing of a curse card", result == -1);
 	
 	G2.hand[player][1] = silver;
-	result = mineEffect(1, estate, player, &G2, handpos);
+	result = cardMine(&G2, handpos, player, 1, estate);
 	Validate("Invalid gaining of non treasure card", result == -1);
 
 
@@ -65,7 +65,7 @@ int main()
 	G2.hand[player][0] = copper;
 	G2.hand[player][1] = copper;
 
-	result = mineEffect(0, silver, player, &G2, handpos);
+	result = cardMine(&G2, handpos, player, 0, silver);
 	Validate("One card discarded correctly", G2.handCount[player] == G1.handCount[player] - 1);
 	Validate("Copper upgraded to silver correctly", result != -1);
 

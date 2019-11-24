@@ -47,7 +47,7 @@ int main()
 	G1.hand[player][1] = estate;
 	memcpy(&G2, &G1, sizeof(struct gameState));
 
-	result = ambassadorEffect(1, 0, player, &G2, handpos);
+	result = cardAmbassador(&G2, 1, 0, player, handpos);
 	Validate("No estate card was added to supply", G2.supplyCount[estate] == G1.supplyCount[estate]);
 	Validate("Other player gained and estate card", G2.handCount[player2] > G1.handCount[player2]);
 	Validate("Ambassador worked properly", result != -1);
@@ -63,7 +63,7 @@ int main()
 	G1.hand[player][1] = estate;
 	memcpy(&G2, &G1, sizeof(struct gameState));
 
-	result = ambassadorEffect(1, -1, player, &G2, handpos);
+	result = cardAmbassador(&G2, 1, -1, player, handpos);
 	Validate("Ambassador worked properly", result == -1);
 
 	// Test 3
@@ -78,7 +78,7 @@ int main()
 	}
 	memcpy(&G2, &G1, sizeof(struct gameState));
 
-	result = ambassadorEffect(1, -1, player, &G2, handpos);
+	result = cardAmbassador(&G2, 1, -1, player, handpos);
 	Validate("Ambassador worked properly", result == -1);
 
 	// Test 4
@@ -96,7 +96,7 @@ int main()
 		G2.hand[player][i] = copper;					// fill hand with copper
 	}
 
-	result = ambassadorEffect(1, 2, player, &G2, handpos);
+	result = cardAmbassador(&G2, 1, 2, player, handpos);
 	Validate("Ambassador worked properly", result == -1);
 
 	// Test 5
@@ -114,7 +114,7 @@ int main()
 
 	memcpy(&G2, &G1, sizeof(struct gameState));
 
-	ambassadorEffect(1, 1, player, &G2, handpos);
+	cardAmbassador(&G2, 1, 1, player, handpos);
 	Validate("One estate card was added to supply", G2.supplyCount[estate] == G1.supplyCount[estate]);
 	Validate("Other player gained and estate card", G2.handCount[player2] > G1.handCount[player2]);
 	Validate("Player lost the estate card", G2.hand[player][1] != estate);
